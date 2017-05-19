@@ -8,8 +8,8 @@ Created on Fri May 19 13:55:08 2017
 The Iris data set contains 150 rows of data, comprising 50 samples from each 
 of three related Iris species: Iris setosa, Iris virginica, and Iris versicolor.
 Each row contains the data for each flower sample: sepal length, sepal width,
-petal length, petal width, and flower species. 
-Flower species are represented as integers, with 0 denoting Iris setosa, 
+petal length, petal width, and flower species.
+Flower species are represented as integers, with 0 denoting Iris setosa,
 1 denoting Iris versicolor, and 2 denoting Iris virginica.
 A training set of 120 samples
 A test set of 30 samples
@@ -85,7 +85,7 @@ def main():
         x = tf.constant(training_set.data)
         y = tf.constant(training_set.target)
         return x, y
-    
+
     def get_test_inputs():
         x = tf.constant(test_set.data)
         y = tf.constant(test_set.target)
@@ -98,7 +98,7 @@ def main():
     classifier.fit(input_fn=get_train_inputs, steps=2000)
     accuracy = classifier.evaluate(input_fn=get_test_inputs, steps=1)['accuracy']
     print ("Evaluate accuracy: %g" % accuracy)
-    
+
     def new_samples():
         return np.array(
         [[6.4, 3.2, 4.5, 1.5],

@@ -8,9 +8,9 @@ import tensorflow as tf
 from tensorflow.examples.tutorials.mnist import input_data
 
 '''
-One should generally initialize weights with a small amount of noise for 
+One should generally initialize weights with a small amount of noise for
 symmetry breaking, and to prevent 0 gradients. Since we're using ReLU neurons,
-it is also good practice to initialize them with a slightly positive initial 
+it is also good practice to initialize them with a slightly positive initial
 bias to avoid "dead neurons".
 '''
 def weight_variable(shape):
@@ -22,8 +22,8 @@ def bias_variable(shape):
     return tf.Variable(initial)
 
 '''
-Our convolutions uses a stride of one and are zero padded so that the output 
-is the same size as the input. 
+Our convolutions uses a stride of one and are zero padded so that the output
+is the same size as the input.
 Our pooling is plain old max pooling over 2x2 blocks.
 '''
 def conv2d(x, W):
@@ -53,7 +53,7 @@ channel. So input is one 28*28 image, and outputs are 32 28*28 images
 W_conv1 = weight_variable([5, 5, 1, 32])
 b_conv1 = bias_variable([32])
 '''
-We then convolve x_image with the weight tensor, add the bias, apply the ReLU 
+We then convolve x_image with the weight tensor, add the bias, apply the ReLU
 function, and finally max pool. The max_pool_2x2 method will reduce the image
 size to 14x14.
 '''
@@ -77,7 +77,7 @@ Now that the image size has been reduced to 7x7, we add a fully-connected layer
 with 1024 neurons to allow processing on the entire image. We reshape the tensor
 from the pooling layer into a batch of vectors, multiply by a weight matrix,
 add a bias, and apply a ReLU.
-So the input is a reshaped tensor with size 7*7*64 and the output is a vector 
+So the input is a reshaped tensor with size 7*7*64 and the output is a vector
 with size 1024.
 '''
 W_fc1 = weight_variable([7*7*64, 1024])
@@ -110,8 +110,8 @@ for i in range(20000):
         train_accuracy = accuracy.eval(feed_dict={x:batch[0], y_:batch[1], keep_drop:1.0})
         print("step: %d, train_accuracy: %g" % (i, train_accuracy))
     train_step.run(feed_dict={x:batch[0], y_:batch[1], keep_drop:0.5})
-    
+
     if i%1000 == 0 and i != 0:
         print("test accuracy %g"%accuracy.eval(feed_dict={x: mnist.test.images, y_: mnist.test.labels, keep_drop: 1.0}))
-    
+
 print("test accuracy %g"%accuracy.eval(feed_dict={x: mnist.test.images, y_: mnist.test.labels, keep_drop: 1.0}))
