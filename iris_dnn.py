@@ -34,10 +34,10 @@ def main():
     if not os.path.exists(IRIS_TEST):
         raw = urllib.urlopen(IRIS_TEST_URL).read()
         with open(IRIS_TEST, 'w') as f:
-            f.write(raw)    
+            f.write(raw)
 
-#load the training and test sets into Datasets using the load_csv_with_header() 
-#method in learn.datasets.base. The load_csv_with_header() method takes three 
+#load the training and test sets into Datasets using the load_csv_with_header()
+#method in learn.datasets.base. The load_csv_with_header() method takes three
 #required arguments:
 
 #    filename, which takes the filepath to the CSV file
@@ -53,20 +53,20 @@ def main():
                     target_dtype=np.int,
                     features_dtype=np.float32)
 
-#The code first defines the model's feature columns, which specify the data 
-#type for the features in the data set. All the feature data is continuous, 
-#so tf.contrib.layers.real_valued_column is the appropriate function to use 
-#to construct the feature columns. There are four features in the data set 
-#(sepal width, sepal height, petal width, and petal height), so accordingly 
+#The code first defines the model's feature columns, which specify the data
+#type for the features in the data set. All the feature data is continuous,
+#so tf.contrib.layers.real_valued_column is the appropriate function to use
+#to construct the feature columns. There are four features in the data set
+#(sepal width, sepal height, petal width, and petal height), so accordingly
 #dimension must be set to 4 to hold all the data.
-    
+
     feature_columns = [tf.contrib.layers.real_valued_column("", dimension=4)]
 
 
-#tf.contrib.learn offers a variety of predefined models, called Estimators, 
-#which you can use "out of the box" to run training and evaluation operations 
-#on your data. Here, you'll configure a Deep Neural Network Classifier model 
-#to fit the Iris data. Using tf.contrib.learn, you can instantiate your 
+#tf.contrib.learn offers a variety of predefined models, called Estimators,
+#which you can use "out of the box" to run training and evaluation operations
+#on your data. Here, you'll configure a Deep Neural Network Classifier model
+#to fit the Iris data. Using tf.contrib.learn, you can instantiate your
 #tf.contrib.learn.DNNClassifier with just a couple lines of code
 
     classifier = tf.contrib.learn.DNNClassifier(feature_columns=feature_columns,
@@ -75,12 +75,12 @@ def main():
                                                 model_dir="./iris_model")
 
 
-#Datasets in tf.contrib.learn are named tuples; you can access feature data and 
-#target values via the data and target fields. Here, training_set.data and 
-#training_set.target contain the feature data and target values for the training 
-#set, respectively, and test_set.data and test_set.target contain feature data 
+#Datasets in tf.contrib.learn are named tuples; you can access feature data and
+#target values via the data and target fields. Here, training_set.data and
+#training_set.target contain the feature data and target values for the training
+#set, respectively, and test_set.data and test_set.target contain feature data
 #and target values for the test set.
-                                                
+
     def get_train_inputs():
         x = tf.constant(training_set.data)
         y = tf.constant(training_set.target)
@@ -91,7 +91,7 @@ def main():
         y = tf.constant(test_set.target)
         return x, y
 
-#Now that you've configured your DNN classifier model, you can fit it to the 
+#Now that you've configured your DNN classifier model, you can fit it to the
 #Iris training data using the fit method. Pass get_train_inputs as the input_fn,
 #and the number of steps to train (here, 2000):
 
@@ -105,6 +105,6 @@ def main():
          [5.8, 3.1, 5.0, 1.7]], dtype=np.float32)
     predictions = list(classifier.predict(input_fn=new_samples))
     print("predictions for the new classes:%d", predictions)
-        
+
 if __name__ == '__main__':
     main()
