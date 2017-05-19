@@ -49,16 +49,22 @@ y = tf.matmul(x, W) + b
 # The raw formulation of cross-entropy if:
 # tf.reduce_mean(-tf.reduce_sum(y_ * tf.log(tf.nn.softmax(y)),reduction_indices=[1]))
 y_ = tf.placeholder(tf.float32, [None, 10])
-cross_entropy = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=y_, logits=y))
+with tf.name_scope("cross_entropy"):
+    cross_entropy = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=y_, logits=y))
+    tf.summary.scalar("loss", cross_entropy)
 train_step = tf.train.GradientDescentOptimizer(0.01).minimize(cross_entropy)
 
 sess = tf.InteractiveSession()
 tf.global_variables_initializer().run()
+train_writer = tf.summary.FileWriter("./train_log",sess.graph)
+merged = tf.summary.merge_all()
 
 # Train
-for _ in range(10000):
+for i in range(1000):
     batch_xs, batch_ys = mnist.train.next_batch(100)
-    loss, _ = sess.run((cross_entropy, train_step), feed_dict={x: batch_xs, y_: batch_ys})
+    summary, loss, _ = sess.run((merged, cross_entropy, train_step), feed_dict={x: batch_xs, y_: batch_ys})
+    if i % 100 == 0:
+        train_writer.add_summary(summary, i)
     print("loss=", loss)
 
 # test the trained model
