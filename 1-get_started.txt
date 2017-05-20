@@ -1,0 +1,40 @@
+This file is the abstraction of tensorflow get_started.
+
+1. MNIST for ML Beginners, which introduces MNIST through the high-level API.
+2. Deep MNIST for Experts, which is more-in depth than "MNIST for ML Beginners," and assumes some familiarity with machine learning concepts.
+3. TensorFlow Mechanics 101, which introduces MNIST through the low-level API.
+
+4. tf.contrib.learn Quickstart, which introduces this API.
+5. Building Input Functions with tf.contrib.learn, which takes you into a somewhat more sophisticated use of this API.
+6. Logging and Monitoring Basics with tf.contrib.learn, which explains how to audit the progress of model training.
+
+7. TensorBoard: Visualizing Learning, which gets you started.
+8. TensorBoard: Embedding Visualization, which demonstrates how to view and interact with high-dimensional data, such as embeddings.
+9. TensorBoard: Graph Visualization, which explains how to visualize the computational graph. Graph visualization is typically more useful for programmers using the low-level API.
+
+===========================================
+1. Declare feature columns, tf.contrib.layers.real_valued_column("X", dimension=1)
+2. You can either use the provided estimator or use a self-defined estimator.
+	tf.contrib.learn.LinearRegressor(feature_columns) or tf.contrib.learn.Estimator(model_fn)
+3. Basic MNIST without neural network using tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(y_, label)), this can directly produce loss. 	
+4. tf.nn.conv2d() is the convolution operation. tf.nn.max_pool() is the pooling operation. tf.nn.relu() applys the ReLU function. tf.nn.dropout() is to reduce overfitting.
+
+5. tf.truncated_normal() is used to generate a random distribution with a given mean and standard deviation.
+6. Visualize the training:
+	1) tf.summary.scalar();
+	2) tf.summary.histogram();
+	3) tf.summary.merge_all();
+	4) tf.summary.FileWriter();
+	5) sess.run(summary);
+	6) summary_writer.add_summary(summary_str, step);
+	7) tf.train.Saver();
+	8) saver.save(sess, dir, step);
+	9) tf.contrib.learn.DNNClassifier(feature_columns, hidden_units, num_classes) to define a DNN;
+	10) classifier.fit(input_fn) or classifier.fit(x, y)
+	11) tf.logging.set_verbosity(tf.logging.INFO);
+	12) tf.contrib.learn.monitors.ValidationMonitor(data, target, every_n_steps);
+	13) Add tf.contrib.learn.RunConfig(save_checkpoints_secs=1) to classifier;
+	14) Add monitor to classifier.fit(monitors=validation_monitor);
+	15) Add tf.contrib.learn.MetricSpec(metric_fn, prediction_key) to validation_monitor to define customizing evaluation metrics;
+	16) Add early stop to validation_monitor;
+	
